@@ -7,6 +7,26 @@ namespace DataStructure
 {
     public class Utility
     {
+        private const int min = 0;
+        private const int max = 100;
+
+        public static ListNode<int> CreateRandomList(int length)
+        {
+            if (length < 0)
+            {
+                throw new ArgumentNullException();
+            }
+
+            ListNode<int> rootNode = null;
+
+            while (length-- > 0)
+            {
+                rootNode.NextNode = new ListNode<int>(GetRandom(min, max));
+            }
+
+            return rootNode;
+        }
+
         public static TreeNode<int> CreateRandomBinarySearchTree(TreeNode<int> node, int level)
         {
             if (level <= 0)
@@ -181,7 +201,7 @@ namespace DataStructure
     public class ListNode<T>
     {
         T value;
-        TreeNode<T> nextNode;
+        ListNode<T> nextNode;
 
         public ListNode(T v)
         {
@@ -194,10 +214,15 @@ namespace DataStructure
             set { this.value = value; }
         }
 
-        public TreeNode<T> NextNode
+        public ListNode<T> NextNode
         {
             get { return nextNode; }
             set { nextNode = value; }
+        }
+
+        public void Add(ListNode<T> node)
+        {
+            nextNode = node;
         }
     }
 

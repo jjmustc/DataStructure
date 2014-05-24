@@ -7,6 +7,96 @@ namespace DataStructure
 {
     public class Algorithm
     {
+        public static List<int> MergeTwoSortedList(List<int> list1, List<int> list2)
+        {
+            if(list1 == null || list1.Count == 0)
+            {
+                return (list2 == null || list2.Count == 0) ?  new List<int>() : list2;
+            }
+            else if (list2 == null || list2.Count == 0)
+            {
+                return (list1 == null || list1.Count == 0) ? new List<int>() : list1;
+            }
+
+            List<int> newList = new List<int>();
+
+            int index1 = 0, index2 = 0;
+
+            while (index1 < list1.Count && index2 < list2.Count)
+            {
+                newList.Add((list1[index1] <= list2[index2]) ? list1[index1++] : list2[index2++]);
+            }
+
+            if (index1 >= list1.Count)
+            {
+                newList.AddRange(list2.GetRange(index2, list2.Count-index2));
+            }
+            else
+            {
+                newList.AddRange(list1.GetRange(index1, list1.Count - index1));
+            }
+
+            return newList;
+        }
+
+        public static ListNode<int> MergeTwoSortedListByListNode(ListNode<int> list1, ListNode<int> list2)
+        {
+            if (list1 == null)
+            {
+                return list2;
+            }
+            else if (list2 == null)
+            {
+                return list1;
+            }
+
+            ListNode<int> rootNode = list1;
+            ListNode<int> tailNode = list1;
+
+            ListNode<int> listIndex1 = list1;
+            ListNode<int> listIndex2 = list2;
+
+            if (listIndex1.Value <= listIndex2.Value)
+            {
+                rootNode = listIndex1;
+                tailNode = listIndex1;
+                listIndex1 = listIndex1.NextNode;
+            }
+            else
+            {
+                rootNode = listIndex2;
+                tailNode = listIndex2;
+                listIndex2 = listIndex2.NextNode;
+            }
+            
+            while (listIndex1 != null && listIndex2 != null)
+            {
+                if (listIndex1.Value <= listIndex2.Value)
+                {
+                    tailNode.NextNode = listIndex1;
+                    tailNode = listIndex1;
+                    listIndex1 = listIndex1.NextNode;
+                }
+                else
+                {
+                    tailNode.NextNode = listIndex2;
+                    tailNode = listIndex2;
+                    listIndex2 = listIndex2.NextNode;
+                }                
+            }
+
+            if (listIndex1 == null)
+            {
+                tailNode.NextNode = listIndex2;
+            }
+            else
+            {
+                tailNode.NextNode = listIndex1;
+            }
+
+            return rootNode;
+        }
+
         /// <summary>
         /// check whether two linear segments intersect on the plane 
         /// </summary>
