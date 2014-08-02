@@ -62,14 +62,14 @@ namespace DataStructure
         {
             TreeNode<int> root;
             root = Utility.CreateBinarySearchTree();
-            Console.WriteLine("InOrder");
-            Utility.InOrderTraverse(root);
+            //Console.WriteLine("InOrder");
+            //Utility.InOrderTraverse(root);
 
-            Console.WriteLine("PreOsrder");
-            Utility.PreOrderTraverse(root);
+            //Console.WriteLine("PreOsrder");
+            //Utility.PreOrderTraverse(root);
 
-            Console.WriteLine("PostOsrder");
-            Utility.PostOrderTraverse(root);
+            //Console.WriteLine("PostOsrder");
+            //Utility.PostOrderTraverse(root);
         }
 
         static void TestTreeDepth()

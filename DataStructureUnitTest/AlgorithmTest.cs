@@ -103,5 +103,14 @@ namespace DataStructureUnitTest
 
             Console.WriteLine(next.Value);
         }
+
+        [TestMethod()]
+        public void QuickSortTest()
+        {
+            int[] inputArray = new int[] { 49, 38, 65, 97, 76, 13, 27};
+            SortAlgorithm.QuickSort(inputArray);
+            int[] expectedArray = new int[] { 13, 27, 38, 49, 65, 76, 97 };
+            CollectionAssert.AreEquivalent(expectedArray, inputArray);
+        }
     }
 }

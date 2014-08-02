@@ -85,35 +85,6 @@ namespace DataStructure
             return root;
         }
 
-        public static void InOrderTraverse(TreeNode<int> node)
-        {
-            if (node == null)
-                return;
-
-            Console.Write(node.Value + " ");
-            InOrderTraverse(node.LeftNode);
-            InOrderTraverse(node.RightNode);
-
-        }
-
-        public static void PreOrderTraverse(TreeNode<int> node)
-        {
-            if (node == null)
-                return;
-            PreOrderTraverse(node.LeftNode);
-            Console.Write(node.Value + " ");
-            PreOrderTraverse(node.RightNode);
-        }
-
-        public static void PostOrderTraverse(TreeNode<int> node)
-        {
-            if (node == null)
-                return;
-            PostOrderTraverse(node.LeftNode);
-            PostOrderTraverse(node.RightNode);
-            Console.Write(node.Value + " ");
-        }
-
         public static int GetTreeDepth(TreeNode<int> node)
         {
             if(node == null)
