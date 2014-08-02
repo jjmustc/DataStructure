@@ -12,9 +12,9 @@ namespace DataStructure
             int length = inputArray.Length;
 
             // build heap (minimum top heap)
-            for (int i = Math.Floor(length / 2); i>=0; i--)
+            for (int i = (int)Math.Floor((decimal)(length / 2)); i>=0; i--)
             {
-                HeapAdjust(inputArray, i);
+                HeapAdjust(inputArray, i, length-1);
             }
 
             // heap sort
@@ -58,7 +58,7 @@ namespace DataStructure
             }
         }
 
-        private static SwapItem(int[] inputArray, int i, int j)
+        private static void SwapItem(int[] inputArray, int i, int j)
         {
             if (i >= inputArray.Length || j >=inputArray.Length)
             {

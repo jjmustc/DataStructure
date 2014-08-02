@@ -14,7 +14,89 @@ namespace DataStructure
             //TestTreeDepth();
 
             //TestGetNodePath();
-            TestSegmentIntersec();
+            //TestSegmentIntersec();
+            //TestMyLeet();
+            //TestReverseList();
+            //TestLongestValidParenthese();
+            //TestSearchForRange();
+            TestCombinationSum();
+        }
+
+        private static void TestMyLeet()
+        {
+            MyLeet myleet = new MyLeet();
+
+            TestSwapPairs();
+        }
+
+        private static void TestSwapPairs()
+        {
+            ListNode<int> root = Utility.CreateRandomList(6);
+            ListNode<int> firstNode = root;
+            while (firstNode != null)
+            {
+                Console.Write(firstNode.Value + "->");
+                firstNode = firstNode.NextNode;
+            }
+
+            Console.WriteLine();
+
+            MyLeet myLeet = new MyLeet();
+            ListNode<int> newRoot = myLeet.SwapPairs(root);
+
+            while (newRoot != null)
+            {
+                Console.Write(newRoot.Value + "->");
+                newRoot = newRoot.NextNode;
+            }
+        }
+
+        private static void TestReverseList()
+        {
+            ListNode<int> root = Utility.CreateRandomList(6);
+            ListNode<int> firstNode = root;
+            while (firstNode != null)
+            {
+                Console.Write(firstNode.Value + "->");
+                firstNode = firstNode.NextNode;
+            }
+            
+            Console.WriteLine();
+
+            MyLeet myLeet = new MyLeet();
+            ListNode<int> newRoot = myLeet.ReverseList(root);
+
+            while (newRoot != null)
+            {
+                Console.Write(newRoot.Value + "->");
+                newRoot = newRoot.NextNode;
+            }
+        }
+
+        private static void TestLongestValidParenthese()
+        {
+            MyLeet myLeet = new MyLeet();
+            Console.WriteLine(myLeet.LongestValidParenthese("((())"));
+            Console.WriteLine(myLeet.LongestValidParenthese("(("));
+            Console.WriteLine(myLeet.LongestValidParenthese("(()"));
+        }
+
+        private static void TestSearchForRange()
+        {
+            int[] input = new int[] {8, 8, 8, 8, 8};
+            MyLeet myLeet = new MyLeet();
+            int l = -1, r = -1;
+            myLeet.SearchForRange(input, 8, out l, out r);
+            Console.WriteLine(l + " " + r);
+        }
+
+        private static void TestCombinationSum()
+        {
+            int[] input = new[] {2, 3, 6, 7};
+
+            MyLeet myLeet = new MyLeet();
+            List<string> results = myLeet.CombinationSum(input, 7);
+            results.ForEach(i => Console.WriteLine(i));
         }
 
     /// <summary>

@@ -17,11 +17,14 @@ namespace DataStructure
                 throw new ArgumentNullException();
             }
 
-            ListNode<int> rootNode = null;
+            ListNode<int> rootNode = new ListNode<int>(GetRandom(min, max));
+            ListNode<int> tempNode = rootNode;
 
-            while (length-- > 0)
+            while (--length > 0)
             {
-                rootNode.NextNode = new ListNode<int>(GetRandom(min, max));
+                System.Threading.Thread.Sleep(200);
+                tempNode.NextNode = new ListNode<int>(GetRandom(min, max));
+                tempNode = tempNode.NextNode;
             }
 
             return rootNode;
