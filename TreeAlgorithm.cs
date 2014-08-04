@@ -23,7 +23,20 @@ namespace DataStructure
 
         public void InOrderTraversalNonRecurse(TreeNode<int> root)
         {
+            Stack<TreeNode<int>> stack = new Stack<TreeNode<int>>();
 
+            Console.WriteLine(root);
+            TreeNode<int> temp = root;
+            while (temp != null)
+            {
+                Console.WriteLine(temp.LeftNode);
+                if (temp.RightNode != null)
+                {
+                    stack.Push(temp.RightNode);
+                }
+
+                temp = temp.LeftNode;
+            }
         }
 
         public void PreOrderTraversal(TreeNode<int> root)

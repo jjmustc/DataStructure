@@ -19,7 +19,9 @@ namespace DataStructure
             //TestReverseList();
             //TestLongestValidParenthese();
             //TestSearchForRange();
-            TestCombinationSum();
+            //TestCombinationSum();
+            //TestPermutationRecursive();
+            TestFindAllSumPath();
         }
 
         private static void TestMyLeet()
@@ -97,6 +99,34 @@ namespace DataStructure
             MyLeet myLeet = new MyLeet();
             List<string> results = myLeet.CombinationSum(input, 7);
             results.ForEach(i => Console.WriteLine(i));
+        }
+
+        private static void TestPermutationRecursive()
+        {
+            MyLeet myLeet = new MyLeet();
+            List<string> results = myLeet.PermutationDFS("abcd");
+
+            results.ForEach(i => Console.WriteLine(i.ToString()));
+        }
+
+        private static void TestFindAllSumPath()
+        {
+            TreeNode<int> root = new TreeNode<int>(3);
+            root.LeftNode = new TreeNode<int>(5);
+            root.RightNode = new TreeNode<int>(7);
+            root.LeftNode.LeftNode = new TreeNode<int>(2);
+            root.LeftNode.RightNode = new TreeNode<int>(6);
+            root.LeftNode.LeftNode.LeftNode = new TreeNode<int>(4);
+            root.LeftNode.LeftNode.RightNode = new TreeNode<int>(6);
+            root.LeftNode.RightNode.LeftNode = new TreeNode<int>(5);
+            root.RightNode.LeftNode = new TreeNode<int>(9);
+
+            MyLeet myLeet = new MyLeet();
+            //Console.WriteLine(myLeet.GetTreeDepth(root));
+
+            //Console.WriteLine(myLeet.FindPathSum(root, 18));
+
+            myLeet.FindAllSumPath(root, 19).ForEach(i=>Console.WriteLine(i));
         }
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text;
 
@@ -190,6 +191,11 @@ namespace DataStructure
         {
             for (int i = 0; i < input.Length; i++)
             {
+                if (s.Length > 0 && input[i] < (s[s.Length - 1] - '0'))
+                {
+                    continue;
+                }
+
                 if (sum - input[i] == 0)
                 {
                     s += " " + input[i].ToString();
@@ -209,5 +215,163 @@ namespace DataStructure
             }
         }
 
+        public List<string> PermutationDFS(string input)
+        {
+            List<string> results = new List<string>();
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                string temp = input;
+                results.AddRange(Perm(input.Substring(i, 1), temp.Remove(i, 1)));
+            }
+
+            return results;
+        }
+
+        private List<string> Perm(string a, string c)
+        {
+            if (c.Length == 1)
+            {
+                return new List<string>() {a + c};
+            }
+
+            List<string> tempResults = new List<string>();
+            for (int i = 0; i < c.Length; i++)
+            {
+                string temp = c;
+                tempResults.AddRange(Perm(c.Substring(i, 1), temp.Remove(i, 1)));
+            }
+
+            List<string> results = new List<string>();
+
+            tempResults.ForEach(i => results.Add(a + i));
+
+            return results;
+        }
+
+        public int GetTreeDepth(TreeNode<int> root)
+        {
+            return GetTreeDepthRecursive(root, 0);
+        }
+
+        private int GetTreeDepthRecursive(TreeNode<int> root, int depth)
+        {
+            if (root == null)
+            {
+                return depth;
+            }
+
+            int leftDepth = GetTreeDepthRecursive(root.LeftNode, depth + 1);
+            int rightDepth = GetTreeDepthRecursive(root.RightNode, depth + 1);
+
+            return Math.Max(leftDepth, rightDepth);
+        }
+
+        public bool FindPathSum(TreeNode<int> root, int sum)
+        {
+            return FindPathSumRecursive(root, sum, 0, false);
+        }
+
+        private bool FindPathSumRecursive(TreeNode<int> node, int sum, int currentSum, bool find)
+        {
+            if (find)
+            {
+                return true;
+            }
+
+            if (node == null)
+            {
+                return currentSum == sum;
+            }
+
+            bool findLeft = FindPathSumRecursive(node.LeftNode, sum, currentSum + node.Value, find);
+
+            find = findLeft;
+
+            bool findRight = FindPathSumRecursive(node.RightNode, sum, currentSum + node.Value, find);
+
+            find = findRight || findLeft;
+
+            return find;
+        }
+
+        public List<string> FindAllSumPath(TreeNode<int> root, int sum)
+        {
+            List<string> results = new List<string>();
+
+            Stack<int> stack = new Stack<int>();
+
+            FindAllSumPathRecursive(root, results, stack, sum, 0);
+
+            return results;
+        }
+
+        private void FindAllSumPathRecursive(TreeNode<int> node, List<string> results, Stack<int> stack, int sum, int currentSum)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            if (node.LeftNode == null && node.RightNode == null)
+            {
+                if (currentSum + node.Value == sum)
+                {
+                    int[] array = new int[stack.Count];
+                    stack.CopyTo(array, 0);
+                    results.Add(node.Value + " " + string.Join(" ", array));
+                }
+
+                return;
+            }
+
+            stack.Push(node.Value);
+
+            FindAllSumPathRecursive(node.LeftNode, results, stack, sum, currentSum + node.Value);
+
+            FindAllSumPathRecursive(node.RightNode, results, stack, sum, currentSum + node.Value);
+
+            stack.Pop();
+        }
+
+        public bool SymmetricTree(TreeNode<int> root)
+        {
+            if (root == null)
+            {
+                throw new NullReferenceException("root is null");
+            }
+
+            if (root.LeftNode != null && root.RightNode != null)
+            {
+                return IsSubTreeSymmetric(root.LeftNode, root.RightNode);
+            }
+
+            return false;
+        }
+
+        private bool IsSubTreeSymmetric(TreeNode<int> leftNode, TreeNode<int> rightNode)
+        {
+            if (leftNode == null || rightNode == null)
+            {
+                if((leftNode == null && rightNode != null) || (leftNode != null && rightNode == null))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            
+            if (leftNode.Value != rightNode.Value)
+            {
+                return false;
+            }
+
+            bool leftSymmetric = IsSubTreeSymmetric(leftNode.LeftNode, rightNode.RightNode);
+            bool rightSymmetric = IsSubTreeSymmetric(leftNode.RightNode, rightNode.LeftNode);
+
+            return leftSymmetric && rightSymmetric;
+        }
     }
 }
