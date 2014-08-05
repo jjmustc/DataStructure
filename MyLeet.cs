@@ -373,5 +373,30 @@ namespace DataStructure
 
             return leftSymmetric && rightSymmetric;
         }
+
+        public int Atoi(string input)
+        {
+            if (input == null || input.Length == 0)
+            {
+                throw new NullReferenceException("input is not valid");
+            }
+
+            input = input.Trim();
+
+            if (input.Length == 0)
+            {
+                throw new NullReferenceException("input should not be just space");
+            }
+
+            int i = 0;
+            bool isPositive = true;
+            int result = 0;
+            while (i <= input.Length - 1)
+            {
+                
+            }
+
+            return result;
+        }
     }
 }
