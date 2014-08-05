@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -372,6 +373,136 @@ namespace DataStructure
             bool rightSymmetric = IsSubTreeSymmetric(leftNode.RightNode, rightNode.LeftNode);
 
             return leftSymmetric && rightSymmetric;
+        }
+
+        public bool RegularExperessionMatching(string input, string pattern)
+        {
+            int len = input.Length;
+            int patterlen = pattern.Length;
+            bool isFind = false;
+            int i = 0, j = 0;
+
+            if (pattern[0] == '.' || pattern[0] == '*')
+            {
+                throw new InvalidDataException("patter shouldn't start with .");
+            }
+
+            while (i < len)
+            {
+                if (input[i] == pattern[j] || pattern[j] == '.' || pattern[j] == '*')
+                {
+                    if ((i + 1 > len) || (j + 1 > patterlen))
+                    {
+                        return false;
+                    }
+
+                    if (input[i] == input[j])
+                    {
+                        
+                    }
+                }
+                else if (input[i] != pattern[j])
+                {
+                    
+                }
+
+            }
+        }
+
+        private bool IsMatch(string input, string pattern, int i, int j)
+        {
+            int len = input.Length;
+            int patterlen = pattern.Length;
+            bool isFind = false;
+
+            while (i < len)
+            {
+                if (input[i] == pattern[j] || pattern[j] == '.' || pattern[j] == '*')
+                {
+                    if ((i + 1 >= len) || (j + 1 >= patterlen))
+                    {
+                        isFind = (i + 1 == len) && (j + 1 == patterlen);
+
+                        return isFind;
+                    }
+
+                    if (input[i] == input[j])
+                    {
+                        return IsMatch(input.Substring(i + 1), pattern.Substring(j + 1), i + 1, j + 1);
+                    }
+                    else if(pattern[j] == '*')
+                    {
+                        // ignore '*'
+                        while (++j < patterlen)
+                        {
+                            if(pattern[j] != '*')
+                                break;
+                        }
+
+                        if (j != patterlen)
+                        {
+                            return IsMatch(input.Substring(i + 1), pattern.Substring(j), i + 1, j);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                        // include '*'
+                        if (input[i] == pattern[j - 1])
+                        {
+                            return IsMatch(input.Substring(i + 1), pattern.Substring(j), i + 1, j);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else if (pattern[j] == '.')
+                    {
+                        if (pattern[j + 1] == '*')
+                        {
+                            // ignore '*'
+                            while (++j < patterlen)
+                            {
+                                if (pattern[j] != '*')
+                                    break;
+                            }
+
+                            if (j != patterlen)
+                            {
+                                if (i + 2 < len)
+                                {
+                                    return IsMatch(input.Substring(i + 2), pattern.Substring(j), i + 2, j);
+
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (input[i] != pattern[j])
+                {
+                    if (i + 1 >= len || j + 1 >= patterlen)
+                    {
+                        return false;
+                    }
+
+                    if (j + 1 < patterlen && pattern[j] == '*')
+                    {
+                        return IsMatch(input.Substring(i), pattern.Substring(j + 1), i, j + 1);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return isFind;
         }
     }
 }
