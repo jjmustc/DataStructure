@@ -27,6 +27,7 @@ namespace DataStructure
 
             Console.WriteLine(root);
             TreeNode<int> temp = root;
+            
             while (temp != null)
             {
                 Console.WriteLine(temp.LeftNode);
