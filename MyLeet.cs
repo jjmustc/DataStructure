@@ -375,39 +375,39 @@ namespace DataStructure
             return leftSymmetric && rightSymmetric;
         }
 
-        public bool RegularExperessionMatching(string input, string pattern)
-        {
-            int len = input.Length;
-            int patterlen = pattern.Length;
-            bool isFind = false;
-            int i = 0, j = 0;
+        ////public bool RegularExperessionMatching(string input, string pattern)
+        ////{
+        ////    int len = input.Length;
+        ////    int patterlen = pattern.Length;
+        ////    bool isFind = false;
+        ////    int i = 0, j = 0;
 
-            if (pattern[0] == '.' || pattern[0] == '*')
-            {
-                throw new InvalidDataException("patter shouldn't start with .");
-            }
+        ////    if (pattern[0] == '.' || pattern[0] == '*')
+        ////    {
+        ////        throw new InvalidDataException("patter shouldn't start with .");
+        ////    }
 
-            while (i < len)
-            {
-                if (input[i] == pattern[j] || pattern[j] == '.' || pattern[j] == '*')
-                {
-                    if ((i + 1 > len) || (j + 1 > patterlen))
-                    {
-                        return false;
-                    }
+        ////    while (i < len)
+        ////    {
+        ////        if (input[i] == pattern[j] || pattern[j] == '.' || pattern[j] == '*')
+        ////        {
+        ////            if ((i + 1 > len) || (j + 1 > patterlen))
+        ////            {
+        ////                return false;
+        ////            }
 
-                    if (input[i] == input[j])
-                    {
+        ////            if (input[i] == input[j])
+        ////            {
                         
-                    }
-                }
-                else if (input[i] != pattern[j])
-                {
+        ////            }
+        ////        }
+        ////        else if (input[i] != pattern[j])
+        ////        {
                     
-                }
+        ////        }
 
-            }
-        }
+        ////    }
+        ////}
 
         private bool IsMatch(string input, string pattern, int i, int j)
         {
@@ -503,6 +503,49 @@ namespace DataStructure
             }
 
             return isFind;
+        }
+
+
+        public List<string> RestoreIPAddress(string s)
+        {
+            if (s == null || s.Length == 0)
+            {
+                return null;
+            }
+
+            List<string> results = new List<string>();
+
+            RestoreUtil(s, string.Empty, 0, 0, results);
+
+            return results;
+        }
+
+        private void RestoreUtil(string s, string resultstr, int start, int order, List<string> results)
+        {
+            int maxlen = 3;
+            if ((order > 3 && start < s.Length) || (start >= s.Length && order < 3))
+            {
+                return;
+            }
+
+            if (order == 4 && start == s.Length)
+            {
+                results.Add(resultstr);
+                return;
+            }
+
+            for (int i = 0; i < maxlen; i++)
+            {
+                string ip = s.Substring(start, i+1);
+
+                if ((i != 0 && ip[0] == '0') || int.Parse(ip) > 255)
+                {
+                    return;
+                }
+
+                resultstr += ip + " ";
+                RestoreUtil(s, resultstr, start + i + 1, order + 1, results);
+            }
         }
     }
 }

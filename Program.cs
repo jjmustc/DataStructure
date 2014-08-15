@@ -21,7 +21,8 @@ namespace DataStructure
             //TestSearchForRange();
             //TestCombinationSum();
             //TestPermutationRecursive();
-            TestFindAllSumPath();
+            //TestFindAllSumPath();
+            TestRestoreIPAddress();
         }
 
         private static void TestMyLeet()
@@ -127,6 +128,16 @@ namespace DataStructure
             //Console.WriteLine(myLeet.FindPathSum(root, 18));
 
             myLeet.FindAllSumPath(root, 19).ForEach(i=>Console.WriteLine(i));
+        }
+
+        private static void TestRestoreIPAddress()
+        {
+            MyLeet myLeet = new MyLeet();
+            List<string> results = myLeet.RestoreIPAddress("25525511135");
+            if (results.Count > 0)
+            {
+                results.ForEach(i => Console.WriteLine(i));
+            }
         }
 
     /// <summary>
