@@ -22,7 +22,8 @@ namespace DataStructure
             //TestCombinationSum();
             //TestPermutationRecursive();
             //TestFindAllSumPath();
-            TestRestoreIPAddress();
+            //TestRestoreIPAddress();
+            TestFindMinimumWindow();
         }
 
         private static void TestMyLeet()
@@ -138,6 +139,12 @@ namespace DataStructure
             {
                 results.ForEach(i => Console.WriteLine(i));
             }
+        }
+
+        private static void TestFindMinimumWindow()
+        {
+            MyLeet myLeet = new MyLeet();
+            Console.WriteLine(myLeet.FindMinimumWindow("adobecodebanc", "abc"));
         }
 
     /// <summary>

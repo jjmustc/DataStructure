@@ -547,32 +547,130 @@ namespace DataStructure
             return results;
         }
 
-        private void RestoreUtil(string s, string resultstr, int start, int order, List<string> results)
+        private void RestoreUtil(string s, string resultstr, int start, int count, List<string> results)
         {
             int maxlen = 3;
-            if ((order > 3 && start < s.Length) || (start >= s.Length && order < 3))
-            {
-                return;
-            }
 
-            if (order == 4 && start == s.Length)
+            if (count == 3)
             {
-                results.Add(resultstr);
+                string ip = s.Substring(start, s.Length - start);
+
+                if (IsValid(ip))
+                {
+                    resultstr +=  ip;
+                    results.Add(resultstr);
+                }
+
                 return;
             }
 
             for (int i = 0; i < maxlen; i++)
             {
-                string ip = s.Substring(start, i+1);
-
-                if ((i != 0 && ip[0] == '0') || int.Parse(ip) > 255)
+                string ip = s.Substring(start, i + 1);
+                if (IsValid(ip))
                 {
-                    return;
+                    //resultstr += ip + ".";
+                    RestoreUtil(s, resultstr + ip + ".", start + i + 1, count + 1, results);
+                    //resultstr = resultstr.Remove(resultstr.Length - ip.Length);
+                }
+            }
+
+        }
+
+        private bool IsValid(string s)
+        {
+            if (s != null && s.Length > 0 && s.Length < 4)
+            {
+                int ip = 0;
+                if (int.TryParse(s, out ip))
+                {
+                    return (ip <= 255) && (ip >= 0);
+                }
+            }
+
+            return false;
+        }
+
+        public int FindMinimumWindow(string src, string target)
+        {
+            Dictionary<char, int> map = new Dictionary<char, int>();
+
+            for (int i = 0; i < target.Length; i++)
+            {
+                if (map.ContainsKey(target[i]))
+                {
+                    map[target[i]]++;
+                }
+                else
+                {
+                    map.Add(target[i], 1);
+                }
+            }
+
+            int first = 0;
+            int second = 0;
+            int minimum = int.MaxValue;
+            Dictionary<char, int> targetMap = new Dictionary<char, int>();
+
+            while (first < src.Length && second < src.Length)
+            {
+                while (!IsFoundAll(map, targetMap))
+                {
+                    if (map.ContainsKey(src[second]))
+                    {
+                        if (targetMap.ContainsKey(src[second]))
+                        {
+                            targetMap[src[second]]++;
+                        }
+                        else
+                        {
+                            targetMap.Add(src[second], 1);
+                        }
+                    }
+
+                    second++;
                 }
 
-                resultstr += ip + " ";
-                RestoreUtil(s, resultstr, start + i + 1, order + 1, results);
+                minimum = Math.Min(second - first + 1, minimum);
+
+                if (targetMap.ContainsKey(src[first]))
+                {
+                    targetMap[src[first]] --;
+                }
+
+                first++;
+
+                while(first < second && !map.ContainsKey(src[first]))
+                {
+                    first++;
+                }
+
+                second++;
             }
+
+            return minimum;
+        }
+
+        public bool IsFoundAll(Dictionary<char, int> map, Dictionary<char,int> targetMap)
+        {
+            if (map.Count != targetMap.Count)
+            {
+                return false;
+            }
+
+            foreach (var pair in map)
+            {
+                if (targetMap.ContainsKey(pair.Key) && targetMap[pair.Key] >= pair.Value)
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
