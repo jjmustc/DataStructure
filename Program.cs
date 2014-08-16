@@ -144,7 +144,7 @@ namespace DataStructure
         private static void TestFindMinimumWindow()
         {
             MyLeet myLeet = new MyLeet();
-            Console.WriteLine(myLeet.FindMinimumWindow("adobecodebanc", "abc"));
+            Console.WriteLine(myLeet.FindMinimumWindow("adobecodebacc", "abc"));
         }
 
     /// <summary>

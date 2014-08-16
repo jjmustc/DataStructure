@@ -614,7 +614,7 @@ namespace DataStructure
 
             while (first < src.Length && second < src.Length)
             {
-                while (!IsFoundAll(map, targetMap))
+                while (second < src.Length)
                 {
                     if (map.ContainsKey(src[second]))
                     {
@@ -628,7 +628,14 @@ namespace DataStructure
                         }
                     }
 
-                    second++;
+                    if (!IsFoundAll(map, targetMap))
+                    {
+                        second++;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 minimum = Math.Min(second - first + 1, minimum);
